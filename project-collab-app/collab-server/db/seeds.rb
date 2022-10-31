@@ -41,6 +41,18 @@ Task.create([
     project_id:4
   },
   {
+    name: "Special Task",
+    completedYN: false,
+    user_id: 2,
+    project_id:3
+  },
+  {
+    name: "very special task",
+    completedYN: false,
+    user_id: 2,
+    project_id:1
+  },
+  {
     name: "taskTWO",
     completedYN: false,
     user_id: 5,

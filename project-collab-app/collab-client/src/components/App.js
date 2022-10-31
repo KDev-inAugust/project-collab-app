@@ -1,19 +1,28 @@
 
 import React, {useEffect, useState} from 'react';
 import '../App.css';
-import TaskListContainer from './TaskListContainer';
+import Project from './Project';
 
 function App() {
-
+  const [projectData, setProjectData]=useState([])
   const [taskData, setTaskData]=useState([])
   const [userData, setUserData]=useState([])
+
+//---------get project data--------
+useEffect(()=>{
+  fetch("http://localhost:9292/projects")
+  .then(res=>res.json())
+  .then(data=>setProjectData(data));
+  
+},[])
+
 
 //-------get task data--------------
   useEffect(()=>{
     fetch("http://localhost:9292/tasks")
     .then(res=>res.json())
     .then(data=>setTaskData(data));
-    console.log('taskData= ', taskData)
+    
   },[])
 //--------get user data--------------
 
@@ -21,17 +30,21 @@ useEffect(()=>{
   fetch("http://localhost:9292/users")
   .then(res=>res.json())
   .then(data=>setUserData(data));
-  console.log('user data= ', userData)
+  
 },[])
-
-
 
 
 
   return (
     <div>
       <h1>Task Collaboration Platform</h1>
-      <TaskListContainer taskData={taskData} userData={userData}/>
+      {
+        projectData.map((project)=>{
+          return(
+            <Project project={project} userData={userData} taskData={taskData}/>
+          )
+        })
+      }
    </div>
   );
 }
