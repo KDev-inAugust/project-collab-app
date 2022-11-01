@@ -4,7 +4,7 @@ import Task from './Task';
 
 
 
-function Project({project, taskData, userData}){
+function Project({project, userData, handleChangeUser}){
 
     const [associatedTaskData, setAssociatedTaskData]=useState([])
     
@@ -17,7 +17,6 @@ function Project({project, taskData, userData}){
       },[])
 
       
-      
 
     return (
         <div>
@@ -25,7 +24,11 @@ function Project({project, taskData, userData}){
             {associatedTaskData.map(task=>{
                 return(
                     <div>
-                    <Task id={task.id} name={task.name} user_id={task.user_id} userData={userData}/>
+                    <Task id={task.id} 
+                    name={task.name} 
+                    user_id={task.user_id} 
+                    userData={userData}
+                    handleChangeUser={handleChangeUser}/>
                     </div>
                 )
             })}

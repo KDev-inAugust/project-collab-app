@@ -11,6 +11,12 @@ class ApplicationController < Sinatra::Base
     tasks.to_json
   end
 
+  # this will get a user by a string of its own name
+  get "/users_by_name/:name" do
+    user=User.find_by(name: params[:name])
+    user.to_json
+  end
+
   # this will take a task id a return its user
   get "/task_user/:id" do
     user=Task.find(params[:id]).user
@@ -26,5 +32,22 @@ class ApplicationController < Sinatra::Base
   get "/project_tasks/:id" do
     project=Project.find(params[:id]).tasks
     project.to_json
+  end
+
+  # ----POST requests-----
+  post "/projects" do
+    project=Project.create(
+    name: params[:name]
+    )
+    project.to_json
+  end
+  # ------ PATCH requests------
+
+  patch '/tasks/:id' do
+    task=Task.find(params[:id])
+      task.update(
+        user_id: params[:user_id]
+      )
+    task.to_json
   end
 end
