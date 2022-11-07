@@ -6,8 +6,8 @@ import Project from './Project';
 
 function App() {
   const [projectData, setProjectData]=useState([])
-  const [taskData, setTaskData]=useState([])
   const [userData, setUserData]=useState([])
+  const [deletedProject, setDeletedProject]=useState([])
 
 //---------get project data--------
 useEffect(()=>{
@@ -15,16 +15,8 @@ useEffect(()=>{
   .then(res=>res.json())
   .then(data=>setProjectData(data));
   
-},[])
+},[deletedProject])
 
-
-//-------get task data--------------
-  useEffect(()=>{
-    fetch("http://localhost:9292/tasks")
-    .then(res=>res.json())
-    .then(data=>setTaskData(data));
-    
-  },[])
 //--------get user data--------------
 
 useEffect(()=>{
@@ -48,6 +40,20 @@ function handleAddProject(name){
     })
     }).then(res=>res.json())
     .then(data=>{setProjectData([...projectData, data])})
+}
+
+//----------- -DELETE- a Project from DB-----------
+
+function deleteProject(id){
+  fetch(`http://localhost:9292/projects/${id}`,{
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  .then(res=>res.json())
+  .then(data=>setDeletedProject(data))
+
 }
 
 //-------------change user assigned to a task--------------
@@ -79,6 +85,7 @@ function handleChangeUser(taskId, userID){
             project={project} 
             userData={userData} 
             handleChangeUser={handleChangeUser}
+            deleteProject={deleteProject}
             />
           )
         })

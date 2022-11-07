@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-function Task({id, name, userData, handleChangeUser}){
+function Task({id, name, userData, handleChangeUser, deleteATask}){
     const [userId, setUserId] = useState([])
     const [showEditFields, setshowEditFields] = useState(false)
     const [taskName, setTaskName] = useState(name)
@@ -39,14 +39,21 @@ function Task({id, name, userData, handleChangeUser}){
                  name: taskName
                  }),})
             .then(res=>res.json())
-            .then(data=>setTaskName(data.name))}
+            .then(data=>setTaskName(data.name));
+        console.log("Task Name Updated=>", taskName)}
         }
     
 
-    //---------this funciton is called when the task name input is changed-------
+    //---------this function is called when the task name input is changed-------
     function handleTaskNameOnChange (e){
         setTaskName(e.target.value)
     }
+
+    function handleDeleteClick(){
+        if (window.confirm('are you sure you want to delete this task?')===true){
+        deleteATask(id)
+    }
+        }
 
     return(
         <div>
@@ -66,9 +73,9 @@ function Task({id, name, userData, handleChangeUser}){
                         <br></br>
                         <input onChange={handleTaskNameOnChange} placeholder='change task name here'></input>
                         <br></br>
-                        <button>delete task</button>
+                        <button onClick={handleDeleteClick}>delete task</button>
                         <br></br>
-                        <button onClick={showHideEditTask}>set and close edit fields</button>
+                        <button onClick={showHideEditTask}>close edit fields</button>
                 </div>}
         </div>
     )

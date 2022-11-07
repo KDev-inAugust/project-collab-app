@@ -1,6 +1,7 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
  
+  # -----GET requests-------
   get "/users" do
     users=User.all
    users.to_json
@@ -41,6 +42,18 @@ class ApplicationController < Sinatra::Base
     )
     project.to_json
   end
+
+
+  post "/tasks" do
+    task=Task.create(
+      name: params[:name],
+      completedYN: params[:completedYN],
+      user_id: params[:user_id],
+      project_id: params[:project_id]
+    )
+    task.to_json
+  end
+
   # ------ PATCH requests------
 
   patch '/tasks/:id' do
@@ -57,6 +70,20 @@ class ApplicationController < Sinatra::Base
       name: params[:name]
     )
     task.to_json
+  end
+
+  # ------ DELETE requests --------
+
+  delete '/tasks/:id' do
+    task=Task.find(params[:id])
+    task.destroy
+    task.to_json
+  end
+
+  delete '/projects/:id' do
+    project=Project.find(params[:id])
+    project.destroy
+    project.to_json
   end
   
 end
