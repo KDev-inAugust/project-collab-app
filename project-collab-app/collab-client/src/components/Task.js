@@ -56,9 +56,10 @@ function Task({id, name, userData, handleChangeUser, deleteATask}){
         }
 
     return(
-        <div>
-            {`id:${id} - name: ${taskName} - `}
+        <div className='task'>
+            {`name: ${taskName} - `}
             {userId}
+            <br></br>
             {showEditFields===false? <button onClick={showHideEditTask}>edit task</button>
             : 
                 <div>

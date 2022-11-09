@@ -79,12 +79,16 @@ function Project({project, userData, handleChangeUser, deleteProject}){
 //------------handle delete current project---------------
     
       function handleDeleteProject(){
-        deleteProject(project.id)
+        if (window.confirm('are you sure you want to delete this project?')===true){
+          deleteProject(project.id)
+      }
+        
       }
 
     return (
-        <div>
-            <h3>{`${project.name}`}</h3>
+        <div id="project_wrapper">
+          <h3>{`${project.name}`}</h3>
+            <div id="project_container">
             {/* first grab all the tasks in this project */}
             {associatedTaskData.map(task=>{
                 return(
@@ -98,7 +102,7 @@ function Project({project, userData, handleChangeUser, deleteProject}){
                     </div>
                 )
             })}
-
+            </div>
             {/* Project Edit Toggle and Properties */}
             {showProjectEdit===false ? 
             <div>
