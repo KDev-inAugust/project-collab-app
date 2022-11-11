@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from 'react';
 
-function Task({id, name, userData, handleChangeUser, deleteATask}){
+function Task({id, user_id, name, userData, handleChangeUser, deleteATask, patchTaskName}){
     const [userId, setUserId] = useState([])
     const [showEditFields, setshowEditFields] = useState(false)
     const [taskName, setTaskName] = useState(name)
    
+
     //---get the user based on a task id as per a custom instance method
       useEffect(()=>{
         fetch(`http://localhost:9292/task_user/${id}`)
         .then(res=>res.json())
         .then(data=>setUserId(data.name));
-      },[])
+      },[user_id])
     
     //--onChange Function Calls changeUser Prop Function from App-------
     function handleUserNameOnChange(e){
@@ -23,27 +24,17 @@ function Task({id, name, userData, handleChangeUser, deleteATask}){
 
     //----------this function allows the edit fields for a task to be shown------
 
-    
     function showHideEditTask(){
         if (showEditFields===false){
              setshowEditFields(true)
         } 
         else if (showEditFields===true){
             setshowEditFields(false);
-            fetch(`http://localhost:9292/task_name_change/${id}`,{
-                method: "PATCH",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                 name: taskName
-                 }),})
-            .then(res=>res.json())
-            .then(data=>setTaskName(data.name));
-        console.log("Task Name Updated=>", taskName)}
+            patchTaskName(taskName, id)
+            
+    }
         }
     
-
     //---------this function is called when the task name input is changed-------
     function handleTaskNameOnChange (e){
         setTaskName(e.target.value)
@@ -51,14 +42,16 @@ function Task({id, name, userData, handleChangeUser, deleteATask}){
 
     function handleDeleteClick(){
         if (window.confirm('are you sure you want to delete this task?')===true){
+            setshowEditFields(false)
         deleteATask(id)
     }
         }
 
     return(
         <div className='task'>
-            {`name: ${taskName} - `}
-            {userId}
+            {`name: ${name}`}
+            <br></br>
+            {` assigned to: ${userId}`}
             <br></br>
             {showEditFields===false? <button onClick={showHideEditTask}>edit task</button>
             : 

@@ -11,18 +11,18 @@ function Project({project, userData, handleChangeUser, deleteProject}){
     const [showProjectEdit, setShowProjectEdit]=useState(false)
     const [newTaskName, setNewTaskName]=useState("")
     const [newUserId, setNewUserId]=useState("")
-    const [addedTask, setAddedTask]=useState([])
+    const [addedTask, setAddedTask]=useState([]) 
+    const [changedTaskName, setChangedTaskNAme]=useState("")
     
-    
-    
+    console.log("project rendered")
+
     useEffect(()=>{
+      console.log("use effect in Project Called")
         fetch(`http://localhost:9292/project_tasks/${project.id}`)
         .then(res=>res.json())
-        .then(data=>setAssociatedTaskData(data));
-        console.log(associatedTaskData)
-        
-      },[deletedTask, addedTask])
-
+        .then(data=>{setAssociatedTaskData(data); console.log(data)});
+        console.log("this is the associated task data", associatedTaskData)
+      },[addedTask, deletedTask, changedTaskName])
 
      //------show task edit fields-----------
       function toggleTaskEditFields(){
@@ -49,19 +49,33 @@ function Project({project, userData, handleChangeUser, deleteProject}){
         setShowProjectEdit(false)
       }
 
+// --------the delete a task function---------
+function deleteATask(id){
+  console.log("this is what the project thinks the ID is", id)
+  fetch(`http://localhost:9292/tasks/${id}`,{
+  method: "DELETE",
+  headers: {
+    "Content-Type": "application/json",
+  },
+}).then(res=>res.json()
+.then(data=>setDeletedTask(data)))
+}
 
-    // --------the delete a task function---------
-      function deleteATask(id){
-        
-        fetch(`http://localhost:9292/tasks/${id}`,{
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
+//-------------- -PATCH- name for task --------------
+      function patchTaskName(taskName, id){
+        fetch(`http://localhost:9292/task_name_change/${id}`,{
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+          name: taskName
+          }),})
+      .then(res=>res.json())
+      .then(data=> setChangedTaskNAme(data));
       }
-      ).then(res=>res.json())
-      .then(data=>setDeletedTask(data))
-      }
+
+  
     // ---------------set username for new task-------------
       
       function handleNewTaskUserName(e){
@@ -70,7 +84,7 @@ function Project({project, userData, handleChangeUser, deleteProject}){
         .then(data=>setNewUserId(data.id))
         console.log(newUserId)
       }
-    // ----------------- set new task name --------------
+    //---------------------- set new task name --------------
 
     function handleNewTaskName(e){
       setNewTaskName(e.target.value)
@@ -81,8 +95,7 @@ function Project({project, userData, handleChangeUser, deleteProject}){
       function handleDeleteProject(){
         if (window.confirm('are you sure you want to delete this project?')===true){
           deleteProject(project.id)
-      }
-        
+        }
       }
 
     return (
@@ -91,17 +104,22 @@ function Project({project, userData, handleChangeUser, deleteProject}){
             <div id="project_container">
             {/* first grab all the tasks in this project */}
             {associatedTaskData.map(task=>{
+              console.log("associated task data in map=>", associatedTaskData)
+              console.log("task", task, "task id=>", task.id)
                 return(
                     <div>
-                    <Task id={task.id} 
+                    <Task 
+                    id={task.id} 
                     name={task.name} 
                     user_id={task.user_id} 
                     userData={userData}
                     handleChangeUser={handleChangeUser}
-                    deleteATask={deleteATask}/>
+                    deleteATask={deleteATask}
+                    patchTaskName={patchTaskName}/>
                     </div>
-                )
-            })}
+                  )
+              })}
+              {console.log("this should have run")}
             </div>
             {/* Project Edit Toggle and Properties */}
             {showProjectEdit===false ? 
@@ -123,6 +141,7 @@ function Project({project, userData, handleChangeUser, deleteProject}){
               <button onClick={addTaskToProject}>add and close edit field</button> 
               <br></br>
               <button onClick={toggleTaskEditFields}>cancel changes and close</button>
+              
             </div>
             }
         </div>

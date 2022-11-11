@@ -14,7 +14,6 @@ useEffect(()=>{
   fetch("http://localhost:9292/projects")
   .then(res=>res.json())
   .then(data=>setProjectData(data));
-  
 },[deletedProject])
 
 //--------get user data--------------
@@ -26,7 +25,7 @@ useEffect(()=>{
   
 },[])
 
-//-----------add -POST- new project to DB------
+//-----------add -POST- new project to DB------------
 
 function handleAddProject(name){
   
@@ -56,6 +55,7 @@ function deleteProject(id){
 
 }
 
+
 //-------------change user assigned to a task--------------
 
 function handleChangeUser(taskId, userID){
@@ -72,6 +72,7 @@ function handleChangeUser(taskId, userID){
 }
 
 //-----------update the database------------
+
 
 
   return (
