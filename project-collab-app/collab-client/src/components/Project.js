@@ -14,15 +14,14 @@ function Project({project, userData, handleChangeUser, deleteProject}){
     const [addedTask, setAddedTask]=useState([]) 
     const [changedTaskName, setChangedTaskNAme]=useState("")
     
-    console.log("project rendered")
+    console.log("I reloaded")
 
     useEffect(()=>{
-      console.log("use effect in Project Called")
         fetch(`http://localhost:9292/project_tasks/${project.id}`)
         .then(res=>res.json())
         .then(data=>{setAssociatedTaskData(data); console.log(data)});
         console.log("this is the associated task data", associatedTaskData)
-      },[addedTask, deletedTask, changedTaskName])
+      },[addedTask, deletedTask, changedTaskName, project])
 
      //------show task edit fields-----------
       function toggleTaskEditFields(){
@@ -51,7 +50,6 @@ function Project({project, userData, handleChangeUser, deleteProject}){
 
 // --------the delete a task function---------
 function deleteATask(id){
-  console.log("this is what the project thinks the ID is", id)
   fetch(`http://localhost:9292/tasks/${id}`,{
   method: "DELETE",
   headers: {
@@ -104,8 +102,6 @@ function deleteATask(id){
             <div id="project_container">
             {/* first grab all the tasks in this project */}
             {associatedTaskData.map(task=>{
-              console.log("associated task data in map=>", associatedTaskData)
-              console.log("task", task, "task id=>", task.id)
                 return(
                     <div>
                     <Task 
@@ -119,7 +115,6 @@ function deleteATask(id){
                     </div>
                   )
               })}
-              {console.log("this should have run")}
             </div>
             {/* Project Edit Toggle and Properties */}
             {showProjectEdit===false ? 

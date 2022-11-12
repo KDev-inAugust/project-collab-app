@@ -31,7 +31,6 @@ function Task({id, user_id, name, userData, handleChangeUser, deleteATask, patch
         else if (showEditFields===true){
             setshowEditFields(false);
             patchTaskName(taskName, id)
-            
     }
         }
     

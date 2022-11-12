@@ -85,5 +85,14 @@ class ApplicationController < Sinatra::Base
     project.destroy
     project.to_json
   end
+
+  delete "/projects_tasks/:project_id" do
+    tasks=Task.where(project_id: params[:project_id])
+    Task.delete([tasks])
+    tasks.to_json
+  end
   
+
+
 end
+

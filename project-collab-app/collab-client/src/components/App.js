@@ -13,7 +13,8 @@ function App() {
 useEffect(()=>{
   fetch("http://localhost:9292/projects")
   .then(res=>res.json())
-  .then(data=>setProjectData(data));
+  .then(data=>{setProjectData(data); console.log(projectData)});
+  console.log(projectData)
 },[deletedProject])
 
 //--------get user data--------------
@@ -44,7 +45,8 @@ function handleAddProject(name){
 //----------- -DELETE- a Project from DB-----------
 
 function deleteProject(id){
-  fetch(`http://localhost:9292/projects/${id}`,{
+
+  fetch(`http://localhost:9292/projects_tasks/${id}`,{
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -53,8 +55,15 @@ function deleteProject(id){
   .then(res=>res.json())
   .then(data=>setDeletedProject(data))
 
+  fetch(`http://localhost:9292/projects/${id}`,{
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  .then(res=>res.json())
+  .then(data=>setDeletedProject(data))
 }
-
 
 //-------------change user assigned to a task--------------
 
@@ -72,8 +81,6 @@ function handleChangeUser(taskId, userID){
 }
 
 //-----------update the database------------
-
-
 
   return (
     <div>
