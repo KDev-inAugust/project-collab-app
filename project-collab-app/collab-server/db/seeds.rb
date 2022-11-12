@@ -2,46 +2,46 @@ puts "🌱 Seeding..."
 
 User.create([
   {
-    name: "Jimbo"
+    name: "Jim"
   },
   {
     name: "KayDee"
   },
   {
-    name: "Jack Skellz"
+    name: "Jacky Skellz"
   },
   {
-    name: "WyzeGuy"
+    name: "Wyze Guy"
   },
   {
-    name: "TellEmz"
+    name: "Task Whisperer"
   }
 ])
 
 Project.create([
  {
-  name: "ProjOne"
+  name: "Proj One"
   },
   {
-    name: "ProjTwo"
+    name: "Proj Two"
   },
   {
-    name: "ProjThree"
+    name: "Proj Three"
   },
   {
-    name: "ProjFour"
+    name: "Proj Four"
   }
 ])
 
 Task.create([
   {
-    name: "taskONE",
+    name: "Task 1 Proj 4",
     completedYN: false,
     user_id: 5,
     project_id:4
   },
   {
-    name: "Special Task",
+    name: "special task",
     completedYN: false,
     user_id: 2,
     project_id:3
@@ -53,13 +53,13 @@ Task.create([
     project_id:1
   },
   {
-    name: "taskTWO",
+    name: "task Two Proj Four",
     completedYN: false,
     user_id: 5,
     project_id:4
   },
   {
-    name: "taskTHREE",
+    name: "task Three Proj 3",
     completedYN: false,
     user_id: 3,
     project_id:3
@@ -71,7 +71,7 @@ Task.create([
     project_id:2
   },
   {
-    name: "taskFIVE",
+    name: "Task 1 Proj 1",
     completedYN: false,
     user_id: 1,
     project_id: 1

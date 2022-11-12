@@ -92,7 +92,5 @@ class ApplicationController < Sinatra::Base
     tasks.to_json
   end
   
-
-
 end
 
