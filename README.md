@@ -1,7 +1,9 @@
 # project-collab-app
 This app is a simple and straightforward platform designed to delegate team-member responsibility for tasks across a project. This app utilizes a React frontend. 
-Once a project is created the associated task cards are visually grouped inside the task field. The tasks themsleves are assigned a name and a user from the list of available users in the database. And tasks can be fully edited by changing task name, user associated with the task, or by deleting the task altogether. 
+Once a project is created the associated task cards are visually grouped inside the task field. The tasks themsleves are assigned a name and a user from the list of available users in the database. Tasks can be fully edited by changing task name, user associated with the task, or by deleting the task altogether. 
 Projects can also be deleted which will delete all task data associated with that project from the database. 
+### Short Demo Video
+https://www.youtube.com/watch?v=oQrHjB4ux_4
 ## the backend
 This project makes use of Sinatra and Active Record to interact with an SQL database. Rather than filtering state in our 
 React frontend we are customizing our requests to our database via our ApplicationController. The routes are as follows. 
